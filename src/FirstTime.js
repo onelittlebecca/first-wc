@@ -1,6 +1,9 @@
 import { html, css, LitElement } from 'lit-element';
 
 export class FirstTime extends LitElement {
+  /**
+   * LitElement life cycle - styles declaration
+   */
   static get styles() {
     // this being an array will help setup for the future when there's the ability to import
     // the usa style sheet into this element (and others) for easier use
@@ -59,20 +62,52 @@ export class FirstTime extends LitElement {
       }
     `];
   }
-
+  /**
+   * LitElement life cycle - properties declaration
+   */
   static get properties() {
     return {
       title: { type: String },
       status: { type: String, reflect:true },
+      dialog: { type: Boolean }
       //reflect = true == json object -- fancy, allows this property to be used as an attribute so you can assign CSS to it
     };
   }
-
+  /**
+   * LitElement life cycle - property changed
+   */
+  updated(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      if (propName == 'status' || propName == 'dialog') {
+        this.__setAriaStatus(this.status, this.dialog);
+      }
+    });
+  }
+  /**
+   * Aria status setting based on value
+   */
+  __setAriaStatus(status, dialog) {
+    // modify our aria based on error status and if we are acting as a dialog
+    if (status === 'error') {
+      if (dialog) {
+        this.setAttribute('role', 'alertdialog');
+      }
+      else {
+        this.setAttribute('role', 'alert');
+      }
+    }
+  }
+  /**
+   * HTMLElement life cycle
+   */
   constructor() {
     super();
     this.status = 'success';
+    this.dialog = false;
   }
-
+  /**
+   * LitElement life cycle - render callback
+   */
   render() {
     return html`
       <div class="usa-alert usa-alert-${this.status}">
