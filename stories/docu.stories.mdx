@@ -1,0 +1,44 @@
+import { Story, Preview, Meta, Props } from '@storybook/addon-docs/blocks';
+import { html } from 'lit-html';
+
+import '../first-time.js';
+
+<Meta title="Card|Docs" />
+
+# FirstTime
+
+A component for...
+
+## Features:
+
+- a
+- b
+- ...
+
+## How to use
+
+### Installation
+
+```bash
+yarn add first-time
+```
+
+```js
+import 'first-time/first-time.js';
+```
+
+<Preview withToolbar>
+  <Story name="Simple" height="220px">
+    {html`
+      <first-time></first-time>
+    `}
+  </Story>
+</Preview>
+
+## API
+
+<Props of="first-time" />
+
+## Playground
+
+Please select "Card Playground" story and open the knobs panel.
